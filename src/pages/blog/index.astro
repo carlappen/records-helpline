@@ -17,6 +17,7 @@ const allItems = [
 		href: `/blog/${p.id}/`,
 		type: 'article',
 		external: false,
+		heroImage: p.data.heroImage,
 	})),
 	...resources.map((r) => ({
 		title: r.data.title,
@@ -25,6 +26,7 @@ const allItems = [
 		href: r.data.url ?? `/resources/${r.id}/`,
 		type: r.data.type,
 		external: !!r.data.url,
+		heroImage: r.data.heroImage,
 	})),
 ].sort((a, b) => b.date.valueOf() - a.date.valueOf());
 ---
@@ -43,7 +45,7 @@ const allItems = [
 				padding: 0;
 				display: flex;
 				flex-direction: column;
-				gap: 1.5rem;
+				gap: 2rem;
 			}
 			ul li a {
 				display: block;
@@ -52,6 +54,18 @@ const allItems = [
 			}
 			ul li a:hover .title {
 				color: rgb(var(--accent));
+			}
+			.hero-image {
+				width: 100%;
+				margin-bottom: 0.75rem;
+				border-radius: 8px;
+				overflow: hidden;
+			}
+			.hero-image img {
+				width: 100%;
+				height: 200px;
+				object-fit: cover;
+				display: block;
 			}
 			.title {
 				margin: 0 0 0.25rem 0;
@@ -89,6 +103,11 @@ const allItems = [
 						allItems.map((item) => (
 							<li>
 								<a href={item.href} target={item.external ? '_blank' : '_self'} rel={item.external ? 'noopener noreferrer' : undefined}>
+									{item.heroImage && (
+										<div class="hero-image">
+											<img src={typeof item.heroImage === 'object' ? item.heroImage.src : item.heroImage} alt={item.title} />
+										</div>
+									)}
 									<h4 class="title">{item.title}{item.external ? ' ↗' : ''}</h4>
 									<p class="description">{item.description}</p>
 									<div class="meta">
