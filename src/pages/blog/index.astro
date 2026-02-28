@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
@@ -7,9 +6,27 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = await getCollection('blog');
+const resources = await getCollection('resources');
+
+const allItems = [
+	...posts.map((p) => ({
+		title: p.data.title,
+		description: p.data.description,
+		date: p.data.pubDate,
+		href: `/blog/${p.id}/`,
+		type: 'article',
+		external: false,
+	})),
+	...resources.map((r) => ({
+		title: r.data.title,
+		description: r.data.description,
+		date: r.data.pubDate,
+		href: r.data.url ?? `/resources/${r.id}/`,
+		type: r.data.type,
+		external: !!r.data.url,
+	})),
+].sort((a, b) => b.date.valueOf() - a.date.valueOf());
 ---
 
 <!doctype html>
@@ -18,71 +35,48 @@ const posts = (await getCollection('blog')).sort(
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
 			main {
-				width: 960px;
+				width: 720px;
 			}
 			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
 				list-style-type: none;
 				margin: 0;
 				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
+				display: flex;
+				flex-direction: column;
+				gap: 1.5rem;
 			}
 			ul li a {
 				display: block;
+				text-decoration: none;
+				color: inherit;
 			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
+			ul li a:hover .title {
 				color: rgb(var(--accent));
 			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
+			.title {
+				margin: 0 0 0.25rem 0;
+				font-size: 1.2rem;
+				color: rgb(var(--black));
 			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
+			.description {
+				margin: 0 0 0.25rem 0;
+				color: rgb(var(--gray-dark));
+				font-size: 0.95rem;
+			}
+			.meta {
+				display: flex;
+				gap: 0.75rem;
+				align-items: center;
+				font-size: 0.85rem;
+				color: rgb(var(--gray));
+			}
+			.tag {
+				background: rgb(var(--gray-light));
+				padding: 0.1rem 0.5rem;
+				border-radius: 4px;
+				text-transform: uppercase;
+				font-size: 0.75rem;
+				letter-spacing: 0.05em;
 			}
 		</style>
 	</head>
@@ -92,16 +86,15 @@ const posts = (await getCollection('blog')).sort(
 			<section>
 				<ul>
 					{
-						posts.map((post) => (
+						allItems.map((item) => (
 							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
+								<a href={item.href} target={item.external ? '_blank' : '_self'} rel={item.external ? 'noopener noreferrer' : undefined}>
+									<h4 class="title">{item.title}{item.external ? ' ↗' : ''}</h4>
+									<p class="description">{item.description}</p>
+									<div class="meta">
+										<FormattedDate date={item.date} />
+										<span class="tag">{item.type}</span>
+									</div>
 								</a>
 							</li>
 						))
