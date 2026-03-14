@@ -34,9 +34,19 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
         request, or just point you in the right direction.
     </p>
     <ul>
-        <li>Email: <a href="mailto:contact@example.com">[your email]</a></li>
-        <li>Phone: (555) 555-5555</li>
+        <li>Email: <a id="contact-email" href="#" rel="nofollow noopener">[your email]</a></li>
     </ul>
+
+    <script type="module">
+        // Simple obfuscation to keep the email out of the raw HTML
+        const codes = [99, 111, 110, 116, 97, 99, 116, 64, 121, 111, 117, 114, 100, 111, 109, 97, 105, 110, 46, 99, 111, 109];
+        const email = String.fromCharCode(...codes);
+        const link = document.getElementById('contact-email');
+        if (link) {
+            link.href = `mailto:${email}`;
+            link.textContent = email;
+        }
+    </script>
 
     <h2>Resources</h2>
     <p>
