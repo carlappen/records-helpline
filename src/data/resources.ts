@@ -49,6 +49,15 @@ export const resources: Resource[] = [
     external: true,
   },
   {
+    title: "Six requests you should file today",
+    description:
+      "Great ORRs to get you started.",
+    href: 'https://docs.google.com/document/d/1nMrNLz1vahjX46coh3oIXKzIYWdUwz8Vy0nFICmfcnM/edit?tab=t.0#heading=h.w9w6q7oxv1sa',
+    types: ['guide'],
+    source: 'helpline',
+    external: true,
+  },
+  {
     title: "Reporters Committee — Entities Subject to the Law",
     description:
       "A helpful explanation of which organizations are covered by federal FOIA and which are not.",
