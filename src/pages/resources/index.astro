@@ -1,0 +1,120 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { resources } from '../../data/resources';
+
+const helplineResources = resources.filter((r) => r.source === 'helpline');
+const otherResources = resources.filter((r) => r.source !== 'helpline');
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${SITE_TITLE} — Resources`} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 720px;
+			}
+			ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 1.5rem;
+			}
+			.group {
+				margin-bottom: 2rem;
+			}
+			.group:last-of-type {
+				margin-bottom: 0;
+			}
+			ul li a {
+				display: block;
+				text-decoration: none;
+				color: inherit;
+			}
+			ul li a:hover .title {
+				color: rgb(var(--accent));
+			}
+			h2 {
+				margin: 1.6rem 0 0.75rem;
+				font-size: 1.08rem;
+				font-weight: 600;
+				color: rgb(var(--gray-dark));
+			}
+			.title {
+				margin: 0 0 0.25rem 0;
+				font-size: 1.2rem;
+				color: rgb(var(--black));
+			}
+			.description {
+				margin: 0 0 0.25rem 0;
+				color: rgb(var(--gray-dark));
+				font-size: 0.95rem;
+			}
+			.meta {
+				display: flex;
+				gap: 0.75rem;
+				align-items: center;
+				font-size: 0.85rem;
+				color: rgb(var(--gray));
+			}
+			.tag {
+				background: rgb(var(--gray-light));
+				padding: 0.1rem 0.5rem;
+				border-radius: 4px;
+				text-transform: uppercase;
+				font-size: 0.75rem;
+				letter-spacing: 0.05em;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section>
+				<h2>From The Helpline</h2>
+				<ul class="group helpline">
+					{helplineResources.map((item) => (
+						<li>
+							<a href={item.href} target="_blank" rel="noopener noreferrer">
+								<h4 class="title">{item.title} ↗</h4>
+								<p class="description">{item.description}</p>
+								<div class="meta">
+									{item.types.map((tag) => (
+										<span class="tag">{tag}</span>
+									))}
+								</div>
+							</a>
+						</li>
+					))}
+				</ul>
+				{otherResources.length > 0 ? (
+					<>
+						<hr />
+						<h2>Other resources</h2>
+						<ul>
+							{otherResources.map((item) => (
+								<li>
+									<a href={item.href} target="_blank" rel="noopener noreferrer">
+										<h4 class="title">{item.title} ↗</h4>
+										<p class="description">{item.description}</p>
+										<div class="meta">
+											{item.types.map((tag) => (
+												<span class="tag">{tag}</span>
+											))}
+										</div>
+									</a>
+								</li>
+							))}
+						</ul>
+					</>
+				) : null}
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

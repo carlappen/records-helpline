@@ -1,108 +1,26 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-
-const posts = (await getCollection('blog')).filter((p) => !p.data.hidden);
-const resources = await getCollection('resources');
-
-const allItems = [
-	...posts.map((p) => ({
-		title: p.data.title,
-		description: p.data.description,
-		date: p.data.pubDate,
-		href: `/blog/${p.id}/`,
-		type: 'article',
-		external: false,
-		heroImage: p.data.heroImage,
-	})),
-	...resources.map((r) => ({
-		title: r.data.title,
-		description: r.data.description,
-		date: r.data.pubDate,
-		href: r.data.url ?? `/resources/${r.id}/`,
-		type: r.data.type,
-		external: !!r.data.url,
-		heroImage: r.data.heroImage,
-	})),
-].sort((a, b) => b.date.valueOf() - a.date.valueOf());
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-    main {
-        width: 720px;
-    }
-    ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-    ul li a {
-        display: block;
-        text-decoration: none;
-        color: inherit;
-    }
-    ul li a:hover .title {
-        color: rgb(var(--accent));
-    }
-    .title {
-        margin: 0 0 0.25rem 0;
-        font-size: 1.2rem;
-        color: rgb(var(--black));
-    }
-    .description {
-        margin: 0 0 0.25rem 0;
-        color: rgb(var(--gray-dark));
-        font-size: 0.95rem;
-    }
-    .meta {
-        display: flex;
-        gap: 0.75rem;
-        align-items: center;
-        font-size: 0.85rem;
-        color: rgb(var(--gray));
-    }
-    .tag {
-        background: rgb(var(--gray-light));
-        padding: 0.1rem 0.5rem;
-        border-radius: 4px;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-        letter-spacing: 0.05em;
-    }
-</style>
+		<meta http-equiv="refresh" content="0;url=/resources" />
 	</head>
 	<body>
 		<Header />
 		<main>
 			<section>
-				<ul>
-					{
-						allItems.map((item) => (
-							<li>
-								<a href={item.href} target={item.external ? '_blank' : '_self'} rel={item.external ? 'noopener noreferrer' : undefined}>
-								
-									<h4 class="title">{item.title}{item.external ? ' ↗' : ''}</h4>
-									<p class="description">{item.description}</p>
-									<div class="meta">
-										<FormattedDate date={item.date} />
-										<span class="tag">{item.type}</span>
-									</div>
-								</a>
-							</li>
-						))
-					}
-				</ul>
+				<h1>Resources moved</h1>
+				<p>
+					The resources previously hosted here have moved. You can find the current
+					site of curated, external resources here:
+				</p>
+				<p><a href="/resources">Go to Resources</a></p>
 			</section>
 		</main>
 		<Footer />
