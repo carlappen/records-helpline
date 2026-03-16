@@ -58,15 +58,6 @@ export const resources: Resource[] = [
     external: true,
   },
   {
-    title: "Reporters Committee — Entities Subject to the Law",
-    description:
-      "A helpful explanation of which organizations are covered by federal FOIA and which are not.",
-    href: 'https://www.rcfp.org/browse-media-law-resources/digital-journalists-legal-guide/entities-subject-law-0',
-    types: [],
-    source: 'other',
-    external: true,
-  },
-  {
     title: 'FOIA Requests: State-by-State Open Records Guides',
     description:
       "Links to authoritative state open records guides from the Reporters Committee for Freedom of the Press.",
