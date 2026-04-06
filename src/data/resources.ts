@@ -6,6 +6,7 @@ export type ResourceType =
   | 'lesson'
   | 'fundamentals'
   | 'template'
+  | 'training'
   | string;
 
 
@@ -58,10 +59,19 @@ export const resources: Resource[] = [
     external: true,
   },
   {
-    title: 'FOIA Requests: State-by-State Open Records Guides',
+    title: "Developing ORR ideas, pt 1",
     description:
-      "Links to authoritative state open records guides from the Reporters Committee for Freedom of the Press.",
-    href: 'https://www.rcfp.org/open-government-guide',
+      "How to know what to request",
+    href: 'hhttps://docs.google.com/document/d/16mEIMmWVJ-H5ypuhmlCftLcD-B3JB7cza9T1H--T51Y/edit?usp=sharing',
+    types: ['guide'],
+    source: 'helpline',
+    external: true,
+  },
+  {
+    title: 'The Friendly State News - Training',
+    description:
+      "I can't understate the impact an ORR workshop from Jessica Huseman had on our crew years ago. Do yourself a favor and book one. ",
+    href: 'https://www.thefriendlystatenews.com',
     types: [],
     source: 'other',
     external: true,
@@ -69,10 +79,29 @@ export const resources: Resource[] = [
   {
     title: 'MuckRock — Filing Requests and Finding Examples',
     description:
-      "Search public requests to see how others phrased similar records requests, and use their language as a model.",
+      "More to come on how to use MuckRock well, but the TLDR; amazing resource. Dive into it.",
     href: 'https://www.muckrock.com/',
     types: [],
     source: 'other',
     external: true,
   },
+  {
+    title: 'Georgia First Amendment Foundation',
+    description:
+      "Statewide group with more resources, lobbying efforts and advice.",
+    href: 'https://gfaf.org',
+    types: [],
+    source: 'other',
+    external: true,
+  },
+  {
+    title: 'FOIA Requests: State-by-State Open Records Guides',
+    description:
+      "State open records guides from the Reporters Committee for Freedom of the Press.",
+    href: 'https://www.rcfp.org/open-government-guide',
+    types: [],
+    source: 'other',
+    external: true,
+  },
+  
 ];
