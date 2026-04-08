@@ -61,7 +61,7 @@ export const resources: Resource[] = [
   {
     title: "Developing ORR ideas, pt 1",
     description:
-      "How to know what to request",
+      "How to know what to request.",
     href: 'hhttps://docs.google.com/document/d/16mEIMmWVJ-H5ypuhmlCftLcD-B3JB7cza9T1H--T51Y/edit?usp=sharing',
     types: ['guide'],
     source: 'helpline',
